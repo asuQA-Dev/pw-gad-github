@@ -1,17 +1,32 @@
-# Project test GAD application
+# Tests for GAD application
 
-## Prepare project
+## GAD Application
+
+Repository: https://github.com/jaktestowac/gad-gui-api-demo
+
+Follow instructions in app README
+
+## Prepare
 
 ### Local recommended tools:
 
-- VSC
+- VS Code
 - Git
-- Node > 20
-
+- Node.js (version >16)
 
 ### Installation and setup
 
 - (optional) install VSC recommended plugins
 - install dependencies: `npm install`
-- setup playwright with: `npx playwright install --with-deps chromium`
+- setup Playwright with: `npx playwright install --with-deps chromium`
 - setup husky with: `npx husky`
+
+## Use
+
+Run all tests:
+
+```
+npx playwright test
+```
+
+For more usage cases look in `package.json` scripts section.
