@@ -27,8 +27,10 @@ We need static code analysis tools for:
 **Creator**: Przemek B
 
 ##
+
 ### Wzorce:
-- AAA  (Arrange-Act-Assert)  
-// Arrange:  
-// Act:   
-// Assert:  
+
+- AAA (Arrange-Act-Assert)  
+  // Arrange:  
+  // Act:  
+  // Assert:
