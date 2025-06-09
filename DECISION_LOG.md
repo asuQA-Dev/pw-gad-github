@@ -25,3 +25,10 @@ We need static code analysis tools for:
 **Decision**: Use Prettier, ESLint and Husky to provide hight code standard across framework
 
 **Creator**: Przemek B
+
+##
+### Wzorce:
+- AAA  (Arrange-Act-Assert)  
+// Arrange:  
+// Act:   
+// Assert:  

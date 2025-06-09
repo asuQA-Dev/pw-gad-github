@@ -12,9 +12,9 @@ export default defineConfig({
   workers: 2,
   reporter: 'html',
   use: {
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://gui-api-demo-668k.onrender.com',
     actionTimeout: 0,
-    trace: 'retain-on-failure',
+    trace: 'on',
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
