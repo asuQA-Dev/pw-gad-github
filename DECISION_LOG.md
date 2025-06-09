@@ -34,3 +34,5 @@ We need static code analysis tools for:
   // Arrange:  
   // Act:  
   // Assert:
+
+- POM (Page-Object-Model)
