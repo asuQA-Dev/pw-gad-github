@@ -23,6 +23,7 @@ export default defineConfig([
       'no-console': 'error',
     },
   },
+  tseslint.configs.recommended,
   {
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'error',
@@ -41,7 +42,5 @@ export default defineConfig([
       },
     },
   },
-  tseslint.configs.recommended,
-
   eslintPluginPrettierRecommended,
 ]);
