@@ -29,4 +29,11 @@ Run all tests:
 npx playwright test
 ```
 
+Run all tests with tags:
+
+```
+npx playwright test --grep @GAD-R01-02
+npx playwright test --grep "@GAD"
+```
+
 For more usage cases look in `package.json` scripts section.
