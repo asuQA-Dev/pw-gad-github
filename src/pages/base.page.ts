@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
-export class ArticlesPage {
-  url = '/articles.html';
+export class BasePage {
+  url = '';
 
   constructor(private page: Page) {}
 
@@ -9,7 +9,7 @@ export class ArticlesPage {
     await this.page.goto(this.url);
   }
   async title(): Promise<string> {
-    await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState();
     return this.page.title();
   }
 }

@@ -1,4 +1,4 @@
-import { ArticlesPage } from '../src/pages/article.page';
+import { ArticlesPage } from '../src/pages/articleS.page';
 import { CommentsPage } from '../src/pages/comments.page';
 import { HomePage } from '../src/pages/home.page';
 import { expect, test } from '@playwright/test';
