@@ -1,5 +1,6 @@
 import { LoginPage } from '../src/pages/login.page';
 import { WelcomePage } from '../src/pages/welcome.page';
+import { testUser1 } from '../src/test-data/user.data';
 import { expect, test } from '@playwright/test';
 
 test.describe('Verify login', () => {
@@ -10,13 +11,13 @@ test.describe('Verify login', () => {
       // Arrange: async ({ page }) => {
       // Arrange:
       const loginPage = new LoginPage(page);
-      const email = 'Moses.Armstrong@Feest.ca';
+      const userEmail = testUser1.userEmail;
       const password = 'test1';
       const expectedTitle = 'Welcome';
 
       // Act:
       await loginPage.goto();
-      await loginPage.login(email, password);
+      await loginPage.login(userEmail, password);
 
       // Assert:
       const welcomePage = new WelcomePage(page);
