@@ -12,7 +12,8 @@
     "test": "npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
-    "show-report": "npx playwright show-report"
+    "show-report": "npx playwright show-report",
+    "test:tag": "npx playwright test --grep \"@GAD-R01-01|@GAD-R01-02\""
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@playwright/test": "^1.52.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22.15.30",
+    "dotenv": "^16.5.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-playwright": "^2.2.0",

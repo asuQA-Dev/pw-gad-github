@@ -20,7 +20,7 @@ export default defineConfig([
   },
   {
     rules: {
-      'no-console': 'error',
+      'no-console': 'warn',
     },
   },
   tseslint.configs.recommended,
