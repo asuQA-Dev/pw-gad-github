@@ -1,3 +1,4 @@
+import { RegisterUser } from '../src/models/user.model';
 import { LoginPage } from '../src/pages/login.page';
 import { RegisterPage } from '../src/pages/register.page';
 import { WelcomePage } from '../src/pages/welcome.page';
@@ -10,25 +11,29 @@ test.describe('verify register', () => {
     { tag: '@GAD-R03-01, @GAD-R03-02, @GAD-R03-03' },
     async ({ page }) => {
       // Arrange:
-      const registerPage = new RegisterPage(page);
-      const firstname = faker.person
-        .firstName('male')
-        .replace(/[^A-Za-z]/g, '');
-      const lastname = faker.person.lastName('male').replace(/[^A-Za-z]/g, '');
-      const email = faker.internet.email({
-        firstName: firstname,
-        lastName: lastname,
+      const registerUserData: RegisterUser = {
+        userFirstName: faker.person.firstName('male').replace(/[^A-Za-z]/g, ''),
+        userLastName: faker.person.lastName('male').replace(/[^A-Za-z]/g, ''),
+        userEmail: '',
+        userPassword: faker.internet.password(),
+      };
+
+      registerUserData.userEmail = faker.internet.email({
+        firstName: registerUserData.userFirstName,
+        lastName: registerUserData.userLastName,
         provider: 'faker.com',
         allowSpecialCharacters: true,
       });
-      const password = faker.internet.password();
+
+      const registerPage = new RegisterPage(page);
+
       const expectedTitleLogin = 'Login';
       const popupMessage = 'User created';
       const expectedTitleWelcome = 'Welcome';
 
       // Act:
       await registerPage.goto();
-      await registerPage.registerUser(firstname, lastname, email, password);
+      await registerPage.registerUser(registerUserData);
 
       // Assert:
 
@@ -39,7 +44,10 @@ test.describe('verify register', () => {
       const titleLogin = await loginPage.title();
       expect.soft(titleLogin).toContain(expectedTitleLogin);
 
-      await loginPage.login(email, password);
+      await loginPage.login(
+        registerUserData.userEmail,
+        registerUserData.userPassword,
+      );
 
       const welcomePage = new WelcomePage(page);
       const titleWelcome = await welcomePage.title();
