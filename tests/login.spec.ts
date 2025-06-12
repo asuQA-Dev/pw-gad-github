@@ -8,7 +8,6 @@ test.describe('Verify login', () => {
     'Login with correct credentials',
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
-      // Arrange: async ({ page }) => {
       // Arrange:
       const loginPage = new LoginPage(page);
       const userEmail = testUser1.userEmail;
@@ -30,7 +29,6 @@ test.describe('Verify login', () => {
     'reject Login with incorrect password',
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
-      // Arrange: async ({ page }) => {
       // Arrange:
       const loginPage = new LoginPage(page);
       const userEmail = testUser1.userEmail;
