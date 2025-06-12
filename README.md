@@ -38,5 +38,3 @@ npx playwright test --grep "@GAD"
 ```
 
 For more usage cases look in `package.json` scripts section.
-
-sek2
