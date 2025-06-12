@@ -12,7 +12,7 @@ test.describe('Verify login', () => {
       // Arrange:
       const loginPage = new LoginPage(page);
       const userEmail = testUser1.userEmail;
-      const password = 'test1';
+      const password = testUser1.userPassword;
       const expectedTitle = 'Welcome';
 
       // Act:
