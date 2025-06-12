@@ -1,7 +1,7 @@
 import { LoginPage } from '../src/pages/login.page';
 import { RegisterPage } from '../src/pages/register.page';
 import { WelcomePage } from '../src/pages/welcome.page';
-import { faker } from '@faker-js/faker/locale/en_US';
+import { faker } from '@faker-js/faker/locale//en';
 import { expect, test } from '@playwright/test';
 
 test.describe('verify register', () => {
@@ -11,8 +11,10 @@ test.describe('verify register', () => {
     async ({ page }) => {
       // Arrange:
       const registerPage = new RegisterPage(page);
-      const firstname = faker.person.firstName('male');
-      const lastname = faker.person.lastName('male');
+      const firstname = faker.person
+        .firstName('male')
+        .replace(/[^A-Za-z]/g, '');
+      const lastname = faker.person.lastName('male').replace(/[^A-Za-z]/g, '');
       const email = faker.internet.email({
         firstName: firstname,
         lastName: lastname,
