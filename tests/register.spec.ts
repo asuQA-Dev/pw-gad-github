@@ -44,10 +44,11 @@ test.describe('verify register', () => {
       const titleLogin = await loginPage.title();
       expect.soft(titleLogin).toContain(expectedTitleLogin);
 
-      await loginPage.login(
-        registerUserData.userEmail,
-        registerUserData.userPassword,
-      );
+      // Assert:
+      await loginPage.login({
+        userEmail: registerUserData.userEmail,
+        userPassword: registerUserData.userPassword,
+      });
 
       const welcomePage = new WelcomePage(page);
       const titleWelcome = await welcomePage.title();
@@ -55,3 +56,8 @@ test.describe('verify register', () => {
     },
   );
 });
+
+//  const loginUserData: LoginUser = {
+//       userEmail: testUser1.userEmail,
+//       userPassword: 'incorrectPassword',
+//     };

@@ -20,14 +20,9 @@ export class LoginPage extends BasePage {
     this.loginError = page.getByTestId('login-error');
   }
 
-  async loginNew(loginUserData: LoginUser): Promise<void> {
+  async login(loginUserData: LoginUser): Promise<void> {
     await this.username.fill(loginUserData.userEmail);
     await this.password.fill(loginUserData.userPassword);
-    await this.loginButton.click();
-  }
-  async login(email: string, password: string): Promise<void> {
-    await this.username.fill(email);
-    await this.password.fill(password);
     await this.loginButton.click();
   }
 }
