@@ -1,3 +1,4 @@
+import { LoginUser } from '../src/models/user.model';
 import { LoginPage } from '../src/pages/login.page';
 import { WelcomePage } from '../src/pages/welcome.page';
 import { testUser1 } from '../src/test-data/user.data';
@@ -9,14 +10,17 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
       // Arrange:
-      const loginPage = new LoginPage(page);
-      const userEmail = testUser1.userEmail;
-      const password = testUser1.userPassword;
+      const loginUserData: LoginUser = {
+        userEmail: testUser1.userEmail,
+        userPassword: testUser1.userPassword,
+      };
+
       const expectedTitle = 'Welcome';
 
       // Act:
+      const loginPage = new LoginPage(page);
       await loginPage.goto();
-      await loginPage.login(userEmail, password);
+      await loginPage.loginNew(loginUserData);
 
       // Assert:
       const welcomePage = new WelcomePage(page);
