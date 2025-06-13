@@ -55,9 +55,54 @@ test.describe('verify register', () => {
       expect(titleWelcome).toContain(expectedTitleWelcome);
     },
   );
-});
 
-//  const loginUserData: LoginUser = {
-//       userEmail: testUser1.userEmail,
-//       userPassword: 'incorrectPassword',
-//     };
+  test(
+    'Not register with incorrect data - non valid email',
+    { tag: '@GAD-R03-04' },
+    async ({ page }) => {
+      // Arrange:
+      const registerUserData: RegisterUser = {
+        userFirstName: faker.person.firstName('male').replace(/[^A-Za-z]/g, ''),
+        userLastName: faker.person.lastName('male').replace(/[^A-Za-z]/g, ''),
+        userEmail: '#$%',
+        userPassword: faker.internet.password(),
+      };
+
+      const expectedErrorText = 'Please provide a valid email address';
+      const registerPage = new RegisterPage(page);
+
+      // Act:
+      await registerPage.goto();
+      await registerPage.registerUser(registerUserData);
+
+      // Assert:
+      await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
+    },
+  );
+  test(
+    'Not register with incorrect data - email not provided',
+    { tag: '@GAD-R03-04' },
+    async ({ page }) => {
+      // Arrange:
+      const registerPage = new RegisterPage(page);
+      const expectedEmailErrorText = 'This field is required';
+
+      // Act:
+      await registerPage.goto();
+      await registerPage.firstNameInput.fill(
+        faker.person.firstName('male').replace(/[^A-Za-z]/g, ''),
+      );
+      await registerPage.lastNameInput.fill(
+        faker.person.lastName('male').replace(/[^A-Za-z]/g, ''),
+      );
+      await registerPage.passwordInput.fill(faker.internet.password());
+
+      await registerPage.registerButton.click();
+
+      // Assert:
+      await expect(registerPage.emailErrorText).toHaveText(
+        expectedEmailErrorText,
+      );
+    },
+  );
+});

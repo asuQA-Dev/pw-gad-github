@@ -11,6 +11,7 @@ export class RegisterPage extends BasePage {
   passwordInput: Locator;
   registerButton: Locator;
   alertPopup: Locator;
+  emailErrorText: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -20,6 +21,7 @@ export class RegisterPage extends BasePage {
     this.passwordInput = page.getByTestId('password-input');
     this.registerButton = page.getByTestId('register-button');
     this.alertPopup = page.getByTestId('alert-popup');
+    this.emailErrorText = page.locator('#octavalidate_email');
   }
 
   async registerUser(registerUserData: RegisterUser): Promise<void> {
