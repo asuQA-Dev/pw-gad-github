@@ -29,7 +29,6 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
       // Arrange:
-
       const loginUserData: LoginUser = {
         userEmail: testUser1.userEmail,
         userPassword: 'incorrectPassword',
