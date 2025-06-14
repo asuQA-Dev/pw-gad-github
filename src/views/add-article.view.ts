@@ -6,12 +6,14 @@ export class AddArticleView {
   addBodyInput: Locator;
   saveButton: Locator;
   header: Locator;
+  alertPopup;
 
   constructor(private page: Page) {
     this.addTitleInput = this.page.getByTestId('title-input');
     this.addBodyInput = this.page.getByTestId('body-text');
     this.saveButton = this.page.getByTestId('save');
     this.header = this.page.getByRole('heading', { name: 'Add New Entry' });
+    this.alertPopup = this.page.getByTestId('alert-popup');
   }
 
   async createArticle(createArticle: CreateArticleModel): Promise<void> {
