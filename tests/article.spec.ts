@@ -24,6 +24,30 @@ test.describe('Verify articles', () => {
     await expect.soft(addArticleView.header).toBeVisible();
   });
 
+  test(
+    'user can access single article',
+    { tag: '@GAD-R04-03' },
+    async ({ page }) => {
+      // Arrange:
+      const createdArticlePage = new CreatedArticlesPage(page);
+
+      const articleData = randomArticle();
+      await addArticleView.createArticle(articleData);
+      await articlesPage.goto();
+
+      // Act:
+      await page.getByText(articleData.title).click();
+
+      // Assert:
+      await expect
+        .soft(createdArticlePage.createdArticleTitle)
+        .toHaveText(articleData.title);
+      await expect
+        .soft(createdArticlePage.createdArticleBody)
+        .toHaveText(articleData.body);
+    },
+  );
+
   test('Create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     // Arrange:
     const createdArticlePage = new CreatedArticlesPage(page);
