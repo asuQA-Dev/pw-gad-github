@@ -1,5 +1,4 @@
 import { randomArticle } from '../src/factories/article.factory';
-import { CreateArticleModel } from '../src/models/article.model';
 import { ArticlesPage } from '../src/pages/articles.page';
 import { CreatedArticlesPage } from '../src/pages/created-article.page';
 import { LoginPage } from '../src/pages/login.page';
@@ -12,8 +11,6 @@ test.describe('Verify articles', () => {
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
 
-  let articleData: CreateArticleModel;
-
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     articlesPage = new ArticlesPage(page);
@@ -24,14 +21,13 @@ test.describe('Verify articles', () => {
     await articlesPage.goto();
     await articlesPage.addArticleButtonLogged.click();
 
-    articleData = randomArticle();
-
     await expect.soft(addArticleView.header).toBeVisible();
   });
 
-  test('Create new articles', { tag: '@GAD-R04-01' }, async ({ page }) => {
+  test('Create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     // Arrange:
     const createdArticlePage = new CreatedArticlesPage(page);
+    const articleData = randomArticle();
 
     // Act:
     await addArticleView.createArticle(articleData);
@@ -46,11 +42,13 @@ test.describe('Verify articles', () => {
   });
 
   test(
-    'Create new articles with empty title',
+    'reject new article with empty title',
     { tag: '@GAD-R04-01' },
     async () => {
       // Arrange:
       const expectedAlertMessagePopup = 'Article was not created';
+      const articleData = randomArticle();
+
       // Act:
       // Create article with empty title
       await addArticleView.addBodyInput.fill(articleData.body);
@@ -64,11 +62,13 @@ test.describe('Verify articles', () => {
   );
 
   test(
-    'Create new articles with empty body',
+    'reject new article with empty body',
     { tag: '@GAD-R04-01' },
     async () => {
       // Arrange:
       const expectedAlertMessagePopup = 'Article was not created';
+      const articleData = randomArticle();
+
       articleData.body = '';
 
       // Act:
@@ -78,6 +78,43 @@ test.describe('Verify articles', () => {
       // Assert:
       await expect(addArticleView.alertPopup).toHaveText(
         expectedAlertMessagePopup,
+      );
+    },
+  );
+  test(
+    'reject new article with title exceeding 129 signs',
+    { tag: '@GAD-R04-02' },
+    async () => {
+      // Arrange:
+      const articleData = randomArticle(129);
+
+      const expectedAlertMessagePopup = 'Article was not created';
+
+      // Act:
+      // Create article with 128 sign
+      await addArticleView.createArticle(articleData);
+
+      // Assert:
+      await expect(addArticleView.alertPopup).toHaveText(
+        expectedAlertMessagePopup,
+      );
+    },
+  );
+  test(
+    'create new article title with 128 signs',
+    { tag: '@GAD-R04-02' },
+    async ({ page }) => {
+      // Arrange:
+      const articleData = randomArticle(128);
+      const createdArticlePage = new CreatedArticlesPage(page);
+
+      // Act:
+      // Create article with 128 sign
+      await addArticleView.createArticle(articleData);
+
+      // Assert:
+      await expect(createdArticlePage.createdArticleTitle).toHaveText(
+        articleData.title,
       );
     },
   );
