@@ -81,41 +81,44 @@ test.describe('Verify articles', () => {
       );
     },
   );
-  test(
-    'reject new article with title exceeding 129 signs',
-    { tag: '@GAD-R04-02' },
-    async () => {
-      // Arrange:
-      const articleData = randomArticle(129);
 
-      const expectedAlertMessagePopup = 'Article was not created';
+  test.describe('Verify articles title length', () => {
+    test(
+      'reject new article with title exceeding 129 signs',
+      { tag: '@GAD-R04-02' },
+      async () => {
+        // Arrange:
+        const articleData = randomArticle(129);
 
-      // Act:
-      // Create article with 128 sign
-      await addArticleView.createArticle(articleData);
+        const expectedAlertMessagePopup = 'Article was not created';
 
-      // Assert:
-      await expect(addArticleView.alertPopup).toHaveText(
-        expectedAlertMessagePopup,
-      );
-    },
-  );
-  test(
-    'create new article title with 128 signs',
-    { tag: '@GAD-R04-02' },
-    async ({ page }) => {
-      // Arrange:
-      const articleData = randomArticle(128);
-      const createdArticlePage = new CreatedArticlesPage(page);
+        // Act:
+        // Create article with 128 sign
+        await addArticleView.createArticle(articleData);
 
-      // Act:
-      // Create article with 128 sign
-      await addArticleView.createArticle(articleData);
+        // Assert:
+        await expect(addArticleView.alertPopup).toHaveText(
+          expectedAlertMessagePopup,
+        );
+      },
+    );
+    test(
+      'create new article title with 128 signs',
+      { tag: '@GAD-R04-02' },
+      async ({ page }) => {
+        // Arrange:
+        const articleData = randomArticle(128);
+        const createdArticlePage = new CreatedArticlesPage(page);
 
-      // Assert:
-      await expect(createdArticlePage.createdArticleTitle).toHaveText(
-        articleData.title,
-      );
-    },
-  );
+        // Act:
+        // Create article with 128 sign
+        await addArticleView.createArticle(articleData);
+
+        // Assert:
+        await expect(createdArticlePage.createdArticleTitle).toHaveText(
+          articleData.title,
+        );
+      },
+    );
+  });
 });
