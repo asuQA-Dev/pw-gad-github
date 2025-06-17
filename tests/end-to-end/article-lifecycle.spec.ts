@@ -58,4 +58,21 @@ test.describe('Create and verify articles', () => {
       .soft(createdArticlePage.createdArticleBody)
       .toHaveText(articleData.body);
   });
+  test('user can delete his own article', { tag: '@GAD-R04-04' }, async () => {
+    // Arrange:
+    await articlesPage.gotoArticle(articleData.title);
+    articlesPage.deleteArticle();
+
+    // Act:
+    await createdArticlePage.deleteIcon.click();
+
+    // Assert:
+    await createdArticlePage.waitForPageLoadToUrl();
+    const title = await articlesPage.title();
+    expect(title).toContain('Article');
+
+    await articlesPage.searchInput.fill(articleData.title);
+    await articlesPage.searchButton.click();
+    await expect(articlesPage.noResults).toHaveText('No data');
+  });
 });

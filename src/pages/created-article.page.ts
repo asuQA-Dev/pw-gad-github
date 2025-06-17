@@ -8,6 +8,7 @@ export class CreatedArticlesPage extends BasePage {
 
   createdArticleTitle: Locator;
   createdArticleBody: Locator;
+  deleteIcon: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -15,5 +16,6 @@ export class CreatedArticlesPage extends BasePage {
 
     this.createdArticleTitle = this.page.getByTestId('article-title');
     this.createdArticleBody = this.page.getByTestId('article-body');
+    this.deleteIcon = this.page.getByTestId('delete');
   }
 }
