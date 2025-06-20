@@ -1,4 +1,4 @@
-import { randomArticle } from '../src/factories/article.factory';
+import { prepareRandomArticle } from '../src/factories/article.factory';
 import { ArticlesPage } from '../src/pages/articles.page';
 import { CreatedArticlesPage } from '../src/pages/created-article.page';
 import { LoginPage } from '../src/pages/login.page';
@@ -31,7 +31,7 @@ test.describe('Verify articles', () => {
       // Arrange:
       const createdArticlePage = new CreatedArticlesPage(page);
 
-      const articleData = randomArticle();
+      const articleData = prepareRandomArticle();
       await addArticleView.createArticle(articleData);
       await articlesPage.goto();
 
@@ -51,7 +51,7 @@ test.describe('Verify articles', () => {
   test('Create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     // Arrange:
     const createdArticlePage = new CreatedArticlesPage(page);
-    const articleData = randomArticle();
+    const articleData = prepareRandomArticle();
 
     // Act:
     await addArticleView.createArticle(articleData);
@@ -71,7 +71,7 @@ test.describe('Verify articles', () => {
     async () => {
       // Arrange:
       const expectedAlertMessagePopup = 'Article was not created';
-      const articleData = randomArticle();
+      const articleData = prepareRandomArticle();
 
       // Act:
       // Create article with empty title
@@ -91,7 +91,7 @@ test.describe('Verify articles', () => {
     async () => {
       // Arrange:
       const expectedAlertMessagePopup = 'Article was not created';
-      const articleData = randomArticle();
+      const articleData = prepareRandomArticle();
 
       articleData.body = '';
 
@@ -112,7 +112,7 @@ test.describe('Verify articles', () => {
       { tag: '@GAD-R04-02' },
       async () => {
         // Arrange:
-        const articleData = randomArticle(129);
+        const articleData = prepareRandomArticle(129);
 
         const expectedAlertMessagePopup = 'Article was not created';
 
@@ -131,7 +131,7 @@ test.describe('Verify articles', () => {
       { tag: '@GAD-R04-02' },
       async ({ page }) => {
         // Arrange:
-        const articleData = randomArticle(128);
+        const articleData = prepareRandomArticle(128);
         const createdArticlePage = new CreatedArticlesPage(page);
 
         // Act:

@@ -1,4 +1,4 @@
-import { randomArticle } from '../../src/factories/article.factory';
+import { prepareRandomArticle } from '../../src/factories/article.factory';
 import { CreateArticleModel } from '../../src/models/article.model';
 import { ArticlesPage } from '../../src/pages/articles.page';
 import { CreatedArticlesPage } from '../../src/pages/created-article.page';
@@ -28,7 +28,7 @@ test.describe('Create and verify articles', () => {
 
   test('Create new article', { tag: '@GAD-R04-01' }, async () => {
     // Arrange:
-    articleData = randomArticle();
+    articleData = prepareRandomArticle();
 
     // Act:
     await articlesPage.addArticleButtonLogged.click();
