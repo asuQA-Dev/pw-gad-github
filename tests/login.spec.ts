@@ -12,13 +12,13 @@ test.describe('Verify login', () => {
       // Arrange:
       const expectedTitle = 'Welcome';
       const loginPage = new LoginPage(page);
+      const welcomePage = new WelcomePage(page);
 
       // Act:
       await loginPage.goto();
       await loginPage.login(testUser1);
 
       // Assert:
-      const welcomePage = new WelcomePage(page);
       const title = await welcomePage.getTitle();
       expect(title).toContain(expectedTitle);
     },
@@ -29,14 +29,14 @@ test.describe('Verify login', () => {
     { tag: '@GAD-R02-01' },
     async ({ page }) => {
       // Arrange:
+      const expectedTitle = 'Login';
+      const errorMessage = 'Invalid username or password';
+      const loginPage = new LoginPage(page);
+
       const loginUserData: LoginUserModel = {
         userEmail: testUser1.userEmail,
         userPassword: 'incorrectPassword',
       };
-
-      const expectedTitle = 'Login';
-      const errorMessage = 'Invalid username or password';
-      const loginPage = new LoginPage(page);
 
       // Act:
       await loginPage.goto();
