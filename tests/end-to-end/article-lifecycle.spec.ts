@@ -68,7 +68,7 @@ test.describe('Create and verify articles', () => {
 
     // Assert:
     await createdArticlePage.waitForPageLoadToUrl();
-    const title = await articlesPage.title();
+    const title = await articlesPage.getTitle();
     expect(title).toContain('Article');
 
     await articlesPage.searchInput.fill(articleData.title);

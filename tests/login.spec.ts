@@ -19,7 +19,7 @@ test.describe('Verify login', () => {
 
       // Assert:
       const welcomePage = new WelcomePage(page);
-      const title = await welcomePage.title();
+      const title = await welcomePage.getTitle();
       expect(title).toContain(expectedTitle);
     },
   );
@@ -45,7 +45,7 @@ test.describe('Verify login', () => {
       // Assert:
       await expect.soft(loginPage.loginError).toHaveText(errorMessage);
 
-      const title = await loginPage.title();
+      const title = await loginPage.getTitle();
       expect.soft(title).toContain(expectedTitle);
     },
   );
