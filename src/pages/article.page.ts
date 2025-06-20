@@ -2,13 +2,14 @@ import { MainMenuComponents } from '../components/main-menu.components';
 import { BasePage } from './base.page';
 import { Locator, Page } from '@playwright/test';
 
-export class CreatedArticlesPage extends BasePage {
+export class ArticlePage extends BasePage {
   url = '/articles.html';
   mainMenuComponents: MainMenuComponents;
 
   createdArticleTitle: Locator;
   createdArticleBody: Locator;
   deleteIcon: Locator;
+  addCommentButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -17,5 +18,6 @@ export class CreatedArticlesPage extends BasePage {
     this.createdArticleTitle = this.page.getByTestId('article-title');
     this.createdArticleBody = this.page.getByTestId('article-body');
     this.deleteIcon = this.page.getByTestId('delete');
+    this.addCommentButton = this.page.locator('#add-new-comment');
   }
 }

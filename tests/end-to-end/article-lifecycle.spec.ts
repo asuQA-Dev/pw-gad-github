@@ -1,7 +1,7 @@
 import { prepareRandomArticle } from '../../src/factories/article.factory';
 import { CreateArticleModel } from '../../src/models/article.model';
+import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
-import { CreatedArticlesPage } from '../../src/pages/created-article.page';
 import { LoginPage } from '../../src/pages/login.page';
 import { testUser1 } from '../../src/test-data/user.data';
 import { AddArticleView } from '../../src/views/add-article.view';
@@ -13,13 +13,13 @@ test.describe('Create and verify articles', () => {
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
   let articleData: CreateArticleModel;
-  let createdArticlePage: CreatedArticlesPage;
+  let createdArticlePage: ArticlePage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
-    createdArticlePage = new CreatedArticlesPage(page);
+    createdArticlePage = new ArticlePage(page);
 
     await loginPage.goto();
     await loginPage.login(testUser1);

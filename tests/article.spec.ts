@@ -1,6 +1,6 @@
 import { prepareRandomArticle } from '../src/factories/article.factory';
+import { ArticlePage } from '../src/pages/article.page';
 import { ArticlesPage } from '../src/pages/articles.page';
-import { CreatedArticlesPage } from '../src/pages/created-article.page';
 import { LoginPage } from '../src/pages/login.page';
 import { testUser1 } from '../src/test-data/user.data';
 import { AddArticleView } from '../src/views/add-article.view';
@@ -29,7 +29,7 @@ test.describe('Verify articles', () => {
     { tag: '@GAD-R04-03' },
     async ({ page }) => {
       // Arrange:
-      const createdArticlePage = new CreatedArticlesPage(page);
+      const createdArticlePage = new ArticlePage(page);
 
       const articleData = prepareRandomArticle();
       await addArticleView.createArticle(articleData);
@@ -50,7 +50,7 @@ test.describe('Verify articles', () => {
 
   test('Create new article', { tag: '@GAD-R04-01' }, async ({ page }) => {
     // Arrange:
-    const createdArticlePage = new CreatedArticlesPage(page);
+    const createdArticlePage = new ArticlePage(page);
     const articleData = prepareRandomArticle();
 
     // Act:
@@ -132,7 +132,7 @@ test.describe('Verify articles', () => {
       async ({ page }) => {
         // Arrange:
         const articleData = prepareRandomArticle(128);
-        const createdArticlePage = new CreatedArticlesPage(page);
+        const createdArticlePage = new ArticlePage(page);
 
         // Act:
         // Create article with 128 sign

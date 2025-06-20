@@ -6,7 +6,7 @@ export class AddArticleView {
   addBodyInput: Locator;
   saveButton: Locator;
   addNewHeader: Locator;
-  alertPopup;
+  alertPopup: Locator;
 
   constructor(private page: Page) {
     this.addTitleInput = this.page.getByTestId('title-input');
