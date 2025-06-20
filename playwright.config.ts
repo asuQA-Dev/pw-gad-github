@@ -1,3 +1,4 @@
+import { BASE_URL } from './src/env.config';
 import { defineConfig, devices } from '@playwright/test';
 
 /**
@@ -5,7 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  globalSetup: 'src/global-setup.ts',
+  // globalSetup: 'src/global-setup.ts',
   timeout: 30_000,
   expect: { timeout: 10000 },
   fullyParallel: true,
@@ -13,7 +14,8 @@ export default defineConfig({
   workers: 2,
   reporter: 'html',
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: BASE_URL,
+    // baseURL: process.env.BASE_URL,
     actionTimeout: 0,
     trace: 'on',
     video: 'retain-on-failure',
