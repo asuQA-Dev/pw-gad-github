@@ -32,7 +32,7 @@ test.describe('Create and verify articles', () => {
 
     // Act:
     await articlesPage.addArticleButtonLogged.click();
-    await expect.soft(addArticleView.header).toBeVisible();
+    await expect.soft(addArticleView.addNewHeader).toBeVisible();
     await addArticleView.createArticle(articleData);
 
     // Assert:
