@@ -63,10 +63,9 @@ test.describe('Create and verify articles', () => {
     const expectedToContainTitle = 'Article';
     const expectedToHaveText = 'No data';
     await articlesPage.gotoArticle(articleData.title);
-    articlesPage.deleteArticle();
 
     // Act:
-    await createdArticlePage.deleteIcon.click();
+    await articlesPage.deleteArticle();
 
     // Assert:
     await createdArticlePage.waitForPageLoadToUrl();
