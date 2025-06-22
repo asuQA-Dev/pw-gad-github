@@ -1,10 +1,10 @@
-import { CreateArticleModel } from '../models/article.model';
+import { addArticleModel } from '../models/article.model';
 import { faker } from '@faker-js/faker/locale/en';
 
 export function prepareRandomArticle(
   titleLength?: number,
   bodySentence = 5,
-): CreateArticleModel {
+): addArticleModel {
   let title: string;
 
   if (titleLength) title = faker.string.alpha(titleLength);
@@ -12,6 +12,6 @@ export function prepareRandomArticle(
 
   const body = faker.lorem.sentences(bodySentence);
 
-  const newArticle: CreateArticleModel = { title: title, body: body };
+  const newArticle: addArticleModel = { title: title, body: body };
   return newArticle;
 }

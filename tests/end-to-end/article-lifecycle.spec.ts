@@ -1,5 +1,5 @@
 import { prepareRandomArticle } from '../../src/factories/article.factory';
-import { CreateArticleModel } from '../../src/models/article.model';
+import { addArticleModel } from '../../src/models/article.model';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
 import { LoginPage } from '../../src/pages/login.page';
@@ -12,7 +12,7 @@ test.describe('Create and verify articles', () => {
   let loginPage: LoginPage;
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
-  let articleData: CreateArticleModel;
+  let articleData: addArticleModel;
   let createdArticlePage: ArticlePage;
 
   test.beforeEach(async ({ page }) => {
