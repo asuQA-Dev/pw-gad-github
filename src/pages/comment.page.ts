@@ -7,10 +7,12 @@ export class CommentPage extends BasePage {
   mainMenuComponents: MainMenuComponents;
 
   commentBody: Locator;
+  editButton: Locator;
 
   constructor(page: Page) {
     super(page);
     this.mainMenuComponents = new MainMenuComponents(page);
     this.commentBody = this.page.getByTestId('comment-body');
+    this.editButton = this.page.getByTestId('edit');
   }
 }

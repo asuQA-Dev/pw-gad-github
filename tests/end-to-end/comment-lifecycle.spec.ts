@@ -8,6 +8,7 @@ import { LoginPage } from '../../src/pages/login.page';
 import { testUser1 } from '../../src/test-data/user.data';
 import { AddArticleView } from '../../src/views/add-article.view';
 import { AddCommentView } from '../../src/views/add-comment.view';
+import { EditCommentView } from '../../src/views/edit-comment.view';
 import { expect, test } from '@playwright/test';
 
 test.describe('Create and verify comment', () => {
@@ -18,6 +19,7 @@ test.describe('Create and verify comment', () => {
   let articleData: addArticleModel;
   let addCommentView: AddCommentView;
   let commentPage: CommentPage;
+  let editCommentView: EditCommentView;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -26,6 +28,7 @@ test.describe('Create and verify comment', () => {
     addArticleView = new AddArticleView(page);
     addCommentView = new AddCommentView(page);
     commentPage = new CommentPage(page);
+    editCommentView = new EditCommentView(page);
 
     articleData = prepareRandomArticle();
 
@@ -40,9 +43,8 @@ test.describe('Create and verify comment', () => {
   test('Create new comment', { tag: '@GAD-R06-01' }, async () => {
     // Create new comment
     // Arrange:
-    const expectedPopupText = 'Comment was created';
+    const expectedPopupTextCreated = 'Comment was created';
     const expectedAddCommentHeader = 'Add New Comment';
-
     const newCommentData = prepareRandomComment();
 
     // Act:
@@ -50,11 +52,12 @@ test.describe('Create and verify comment', () => {
     await expect(addCommentView.addNewHeader).toHaveText(
       expectedAddCommentHeader,
     );
-    await addCommentView.createComment(newCommentData.body);
-    // await addCommentView.createComment(commentText);
+    await addCommentView.createComment(newCommentData);
 
     // Assert:
-    await expect(addCommentView.alertPopup).toHaveText(expectedPopupText);
+    await expect(addCommentView.alertPopup).toHaveText(
+      expectedPopupTextCreated,
+    );
 
     // Verify comment:
     // Act
@@ -64,5 +67,25 @@ test.describe('Create and verify comment', () => {
     await articleComment.link.click();
 
     await expect(commentPage.commentBody).toHaveText(newCommentData.body);
+
+    // Edit comment
+    //Act:
+    const editCommentData = prepareRandomComment();
+    const expectedPopupTextUpdated = 'Comment was updated';
+
+    await commentPage.editButton.click();
+
+    await editCommentView.updateComment(editCommentData);
+
+    await expect(editCommentView.alertPopup).toHaveText(
+      expectedPopupTextUpdated,
+    );
+    await expect(commentPage.commentBody).toHaveText(editCommentData.body);
+
+    await editCommentView.returnLink.click();
+    const updatedCommentData = articlesPage.getArticleComment(
+      editCommentData.body,
+    );
+    await expect(updatedCommentData.body).toHaveText(editCommentData.body);
   });
 });

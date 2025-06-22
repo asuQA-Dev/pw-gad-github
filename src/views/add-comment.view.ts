@@ -1,3 +1,4 @@
+import { AddCommentModel } from '../models/comment.model';
 import { Locator, Page } from '@playwright/test';
 
 export class AddCommentView {
@@ -16,8 +17,8 @@ export class AddCommentView {
       name: 'Add New Comment',
     });
   }
-  async createComment(commentText: string): Promise<void> {
-    await this.commentBody.fill(commentText);
+  async createComment(commentData: AddCommentModel): Promise<void> {
+    await this.commentBody.fill(commentData.body);
     await this.saveButton.click();
   }
 }
