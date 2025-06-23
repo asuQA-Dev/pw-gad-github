@@ -105,30 +105,41 @@ test.describe('Create and verify comment', () => {
     });
   });
 
-  test('Create and verify new comment', { tag: '@GAD-homework' }, async () => {
-    // Arrange:
-    const secondCommentData = prepareRandomComment();
+  test(
+    'User can add more than one comment',
+    { tag: '@GAD-R06-03' },
+    async () => {
+      const secondCommentData = prepareRandomComment();
 
-    await test.step('1. Create new comment - homework', async () => {
-      // Arrange:
+      await test.step('1. Create new comment', async () => {
+        const expectedPopupTextCreated = 'Comment was created';
 
-      // Act:
-      await articlePage.addCommentButton.click();
+        await articlePage.addCommentButton.click();
+        await addCommentView.createComment(secondCommentData);
 
-      await addCommentView.createComment(secondCommentData);
+        await expect
+          .soft(addCommentView.alertPopup)
+          .toHaveText(expectedPopupTextCreated);
+      });
+      await test.step('2. Create and verify second comment', async () => {
+        const secondCommentBody = await test.step('1-step create', async () => {
+          const secondCommentData = prepareRandomComment();
 
-      // Assert:
-    });
-    await test.step('2. Verify comment - homework', async () => {
-      // Act
-      const articleComment = articlesPage.getArticleComment(
-        secondCommentData.body,
-      );
-      await expect(articleComment.body).toHaveText(secondCommentData.body);
-      await articleComment.link.click();
+          await articlePage.addCommentButton.click();
+          await addCommentView.createComment(secondCommentData);
 
-      // Assert:
-      await expect(commentPage.commentBody).toHaveText(secondCommentData.body);
-    });
-  });
+          return secondCommentData.body;
+        });
+
+        await test.step('2-step verify', async () => {
+          const articleComment =
+            articlesPage.getArticleComment(secondCommentBody);
+          await expect(articleComment.body).toHaveText(secondCommentBody);
+          await articleComment.link.click();
+
+          await expect(commentPage.commentBody).toHaveText(secondCommentBody);
+        });
+      });
+    },
+  );
 });
