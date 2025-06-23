@@ -104,4 +104,31 @@ test.describe('Create and verify comment', () => {
       await expect(updatedCommentData.body).toHaveText(editCommentData.body);
     });
   });
+
+  test('Create and verify new comment', { tag: '@GAD-homework' }, async () => {
+    // Arrange:
+    const secondCommentData = prepareRandomComment();
+
+    await test.step('1. Create new comment - homework', async () => {
+      // Arrange:
+
+      // Act:
+      await articlePage.addCommentButton.click();
+
+      await addCommentView.createComment(secondCommentData);
+
+      // Assert:
+    });
+    await test.step('2. Verify comment - homework', async () => {
+      // Act
+      const articleComment = articlesPage.getArticleComment(
+        secondCommentData.body,
+      );
+      await expect(articleComment.body).toHaveText(secondCommentData.body);
+      await articleComment.link.click();
+
+      // Assert:
+      await expect(commentPage.commentBody).toHaveText(secondCommentData.body);
+    });
+  });
 });
