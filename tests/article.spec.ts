@@ -67,7 +67,7 @@ test.describe('Verify articles', () => {
 
   test(
     'reject new article with empty title',
-    { tag: '@GAD-R04-01' },
+    { tag: '@GAD-R04-01, @logged' },
     async () => {
       // Arrange:
       const expectedAlertMessagePopup = 'Article was not created';
