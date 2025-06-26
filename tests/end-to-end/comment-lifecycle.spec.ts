@@ -5,15 +5,12 @@ import { AddCommentModel } from '../../src/models/comment.model';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
 import { CommentPage } from '../../src/pages/comment.page';
-import { LoginPage } from '../../src/pages/login.page';
-import { testUser1 } from '../../src/test-data/user.data';
 import { AddArticleView } from '../../src/views/add-article.view';
 import { AddCommentView } from '../../src/views/add-comment.view';
 import { EditCommentView } from '../../src/views/edit-comment.view';
 import { expect, test } from '@playwright/test';
 
 test.describe('Create and verify comment', () => {
-  let loginPage: LoginPage;
   let articlePage: ArticlePage;
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
@@ -23,7 +20,6 @@ test.describe('Create and verify comment', () => {
   let commentPage: CommentPage;
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     articlePage = new ArticlePage(page);
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
@@ -33,15 +29,13 @@ test.describe('Create and verify comment', () => {
 
     articleData = prepareRandomArticle();
 
-    await loginPage.goto();
-    await loginPage.login(testUser1);
     await articlesPage.goto();
 
     await articlesPage.addArticleButtonLogged.click();
     await addArticleView.createArticle(articleData);
   });
 
-  test('Operate on comment', { tag: '@GAD-R06-01' }, async () => {
+  test('Operate on comment', { tag: '@GAD-R06-01, @logged' }, async () => {
     // Arrange:
     const newCommentData = prepareRandomComment();
 
@@ -107,7 +101,7 @@ test.describe('Create and verify comment', () => {
 
   test(
     'User can add more than one comment',
-    { tag: '@GAD-R06-03' },
+    { tag: '@GAD-R06-03, @logged' },
     async () => {
       const secondCommentData = prepareRandomComment();
 
