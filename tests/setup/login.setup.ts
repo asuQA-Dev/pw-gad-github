@@ -4,7 +4,7 @@ import { WelcomePage } from '@_src/pages/welcome.page';
 import { testUser1 } from '@_src/test-data/user.data';
 import { expect, test as setup } from '@playwright/test';
 
-setup('Login with correct credentials', async ({ page }) => {
+setup('login adn save session', async ({ page }) => {
   // Arrange:
   const expectedTitle = 'Welcome';
   const loginPage = new LoginPage(page);
