@@ -12,11 +12,11 @@ test.describe('Verify menu main button', () => {
       // Arrange:
       const expectedTitle = 'Comments';
       const articlesPage = new ArticlesPage(page);
-      const commentsPage = new CommentsPage(page);
 
       // Act:
       await articlesPage.goto();
-      await articlesPage.mainMenuComponents.commentsButton.click();
+      const commentsPage =
+        await articlesPage.mainMenuComponents.clickCommentsButton();
       const title = await commentsPage.getTitle();
 
       // Assert:
