@@ -6,22 +6,19 @@ import { ArticlePage } from '@_src/pages/article.page';
 import { ArticlesPage } from '@_src/pages/articles.page';
 import { CommentPage } from '@_src/pages/comment.page';
 import { AddArticleView } from '@_src/views/add-article.view';
-import { EditCommentView } from '@_src/views/edit-comment.view';
 import { expect, test } from '@playwright/test';
 
 test.describe('Create and verify comment', () => {
   let articlePage: ArticlePage;
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
-  let editCommentView: EditCommentView;
+
   let articleData: addArticleModel;
 
   test.beforeEach(async ({ page }) => {
     articlePage = new ArticlePage(page);
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
-
-    editCommentView = new EditCommentView(page);
 
     articleData = prepareRandomArticle();
 
@@ -64,24 +61,24 @@ test.describe('Create and verify comment', () => {
     });
 
     let editCommentData: AddCommentModel;
-
     await test.step('3. Update comment', async () => {
       // Act:
       const expectedPopupTextUpdated = 'Comment was updated';
       editCommentData = prepareRandomComment();
 
       // Act:
-      await commentPage.editButton.click();
+      const editCommentView = await commentPage.clickEditButton();
       await editCommentView.updateComment(editCommentData);
 
       // Assert:
-      await expect.soft(editCommentView.alertPopup).toHaveText(expectedPopupTextUpdated);
+      await expect.soft(commentPage.alertPopup).toHaveText(expectedPopupTextUpdated);
       await expect(commentPage.commentBody).toHaveText(editCommentData.body);
     });
 
     await test.step('4. Verify updated comment in article page', async () => {
       // Act:
-      await editCommentView.returnLink.click();
+
+      const articlesPage = await commentPage.clickReturnLink();
       const updatedCommentData = articlesPage.getArticleComment(editCommentData.body);
       // Assert:
       await expect(updatedCommentData.body).toHaveText(editCommentData.body);
