@@ -10,12 +10,12 @@ test.describe('Create and verify articles', () => {
   let articlesPage: ArticlesPage;
   let addArticleView: AddArticleView;
   let articleData: addArticleModel;
-  let createdArticlePage: ArticlePage;
+  let articlePage: ArticlePage;
 
   test.beforeEach(async ({ page }) => {
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
-    createdArticlePage = new ArticlePage(page);
+    articlePage = new ArticlePage(page);
 
     await articlesPage.goto();
   });
@@ -27,11 +27,11 @@ test.describe('Create and verify articles', () => {
     // Act:
     await articlesPage.addArticleButtonLogged.click();
     await expect.soft(addArticleView.addNewHeader).toBeVisible();
-    await addArticleView.createArticle(articleData);
+    const articlePage = await addArticleView.createArticle(articleData);
 
     // Assert:
-    await expect.soft(createdArticlePage.createdArticleTitle).toHaveText(articleData.title);
-    await expect.soft(createdArticlePage.createdArticleBody).toHaveText(articleData.body);
+    await expect.soft(articlePage.createdArticleTitle).toHaveText(articleData.title);
+    await expect.soft(articlePage.createdArticleBody).toHaveText(articleData.body);
   });
 
   test('user can access single article', { tag: '@GAD-R04-03, @logged' }, async () => {
@@ -41,8 +41,8 @@ test.describe('Create and verify articles', () => {
     await articlesPage.gotoArticle(articleData.title);
 
     // Assert:
-    await expect.soft(createdArticlePage.createdArticleTitle).toHaveText(articleData.title);
-    await expect.soft(createdArticlePage.createdArticleBody).toHaveText(articleData.body);
+    await expect.soft(articlePage.createdArticleTitle).toHaveText(articleData.title);
+    await expect.soft(articlePage.createdArticleBody).toHaveText(articleData.body);
   });
   test('user can delete his own article', { tag: '@GAD-R04-04, @logged' }, async () => {
     // Arrange:
@@ -51,10 +51,10 @@ test.describe('Create and verify articles', () => {
     await articlesPage.gotoArticle(articleData.title);
 
     // Act:
-    createdArticlePage = await articlesPage.deleteArticle();
+    articlePage = await articlesPage.deleteArticle();
 
     // Assert:
-    await createdArticlePage.waitForPageLoadToUrl();
+    await articlePage.waitForPageLoadToUrl();
     const title = await articlesPage.getTitle();
     expect(title).toContain(expectedToContainTitle);
 
