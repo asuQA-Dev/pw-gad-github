@@ -30,52 +30,36 @@ test.describe('Create and verify articles', () => {
     await addArticleView.createArticle(articleData);
 
     // Assert:
-    await expect
-      .soft(createdArticlePage.createdArticleTitle)
-      .toHaveText(articleData.title);
-    await expect
-      .soft(createdArticlePage.createdArticleBody)
-      .toHaveText(articleData.body);
+    await expect.soft(createdArticlePage.createdArticleTitle).toHaveText(articleData.title);
+    await expect.soft(createdArticlePage.createdArticleBody).toHaveText(articleData.body);
   });
 
-  test(
-    'user can access single article',
-    { tag: '@GAD-R04-03, @logged' },
-    async () => {
-      // Arrange:
+  test('user can access single article', { tag: '@GAD-R04-03, @logged' }, async () => {
+    // Arrange:
 
-      // Act:
-      await articlesPage.gotoArticle(articleData.title);
+    // Act:
+    await articlesPage.gotoArticle(articleData.title);
 
-      // Assert:
-      await expect
-        .soft(createdArticlePage.createdArticleTitle)
-        .toHaveText(articleData.title);
-      await expect
-        .soft(createdArticlePage.createdArticleBody)
-        .toHaveText(articleData.body);
-    },
-  );
-  test(
-    'user can delete his own article',
-    { tag: '@GAD-R04-04, @logged' },
-    async () => {
-      // Arrange:
-      const expectedToContainTitle = 'Article';
-      const expectedToHaveText = 'No data';
-      await articlesPage.gotoArticle(articleData.title);
+    // Assert:
+    await expect.soft(createdArticlePage.createdArticleTitle).toHaveText(articleData.title);
+    await expect.soft(createdArticlePage.createdArticleBody).toHaveText(articleData.body);
+  });
+  test('user can delete his own article', { tag: '@GAD-R04-04, @logged' }, async () => {
+    // Arrange:
+    const expectedToContainTitle = 'Article';
+    const expectedToHaveText = 'No data';
+    await articlesPage.gotoArticle(articleData.title);
 
-      // Act:
-      await articlesPage.deleteArticle();
+    // Act:
+    createdArticlePage = await articlesPage.deleteArticle();
 
-      // Assert:
-      await createdArticlePage.waitForPageLoadToUrl();
-      const title = await articlesPage.getTitle();
-      expect(title).toContain(expectedToContainTitle);
+    // Assert:
+    await createdArticlePage.waitForPageLoadToUrl();
+    const title = await articlesPage.getTitle();
+    expect(title).toContain(expectedToContainTitle);
 
-      await articlesPage.searchInput.fill(articleData.title);
-      await articlesPage.searchButton.click();
-      await expect(articlesPage.noResults).toHaveText(expectedToHaveText);
-    },
-  );
+    await articlesPage.searchInput.fill(articleData.title);
+    await articlesPage.searchButton.click();
+    await expect(articlesPage.noResults).toHaveText(expectedToHaveText);
+  });
 });

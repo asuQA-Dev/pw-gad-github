@@ -13,70 +13,56 @@ test.describe('Verify register', () => {
     await registerPage.goto();
   });
 
-  test(
-    'Register with correct data and login',
-    { tag: '@GAD-R03-01, @GAD-R03-02, @GAD-R03-03' },
-    async () => {
-      // Arrange:
-      const expectedPopupMessage = 'User created';
-      const expectedTitleLogin = 'Login';
-      const expectedTitleWelcome = 'Welcome';
+  test('Register with correct data and login', { tag: '@GAD-R03-01, @GAD-R03-02, @GAD-R03-03' }, async () => {
+    // Arrange:
+    const expectedPopupMessage = 'User created';
+    const expectedTitleLogin = 'Login';
+    const expectedTitleWelcome = 'Welcome';
 
-      // const loginPage = new LoginPage(page);
+    // const loginPage = new LoginPage(page);
 
-      const loginData = {
-        userEmail: registerUserData.userEmail,
-        userPassword: registerUserData.userPassword,
-      };
+    const loginData = {
+      userEmail: registerUserData.userEmail,
+      userPassword: registerUserData.userPassword,
+    };
 
-      // Act:
-      const loginPage = await registerPage.registerUser(registerUserData);
+    // Act:
+    const loginPage = await registerPage.registerUser(registerUserData);
 
-      // Assert:
-      await expect(registerPage.alertPopup).toHaveText(expectedPopupMessage);
-      await loginPage.waitForPageLoadToUrl();
+    // Assert:
+    await expect(registerPage.alertPopup).toHaveText(expectedPopupMessage);
+    await loginPage.waitForPageLoadToUrl();
 
-      const titleLogin = await loginPage.getTitle();
-      expect.soft(titleLogin).toContain(expectedTitleLogin);
+    const titleLogin = await loginPage.getTitle();
+    expect.soft(titleLogin).toContain(expectedTitleLogin);
 
-      const welcomePage = await loginPage.login(loginData);
-      const titleWelcome = await welcomePage.getTitle();
-      expect(titleWelcome).toContain(expectedTitleWelcome);
-    },
-  );
+    const welcomePage = await loginPage.login(loginData);
+    const titleWelcome = await welcomePage.getTitle();
+    expect(titleWelcome).toContain(expectedTitleWelcome);
+  });
 
-  test(
-    'Not register with incorrect data - non valid email',
-    { tag: '@GAD-R03-04' },
-    async () => {
-      // Arrange:
-      const expectedErrorText = 'Please provide a valid email address';
-      registerUserData.userEmail = '#$%';
+  test('Not register with incorrect data - non valid email', { tag: '@GAD-R03-04' }, async () => {
+    // Arrange:
+    const expectedErrorText = 'Please provide a valid email address';
+    registerUserData.userEmail = '#$%';
 
-      // Act:
-      await registerPage.registerUser(registerUserData);
+    // Act:
+    await registerPage.registerUser(registerUserData);
 
-      // Assert:
-      await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
-    },
-  );
-  test(
-    'Not register with incorrect data - email not provided',
-    { tag: '@GAD-R03-04' },
-    async () => {
-      // Arrange:
-      const expectedEmailErrorText = 'This field is required';
+    // Assert:
+    await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
+  });
+  test('Not register with incorrect data - email not provided', { tag: '@GAD-R03-04' }, async () => {
+    // Arrange:
+    const expectedEmailErrorText = 'This field is required';
 
-      // Act:
-      await registerPage.firstNameInput.fill(registerUserData.userFirstName);
-      await registerPage.lastNameInput.fill(registerUserData.userLastName);
-      await registerPage.passwordInput.fill(registerUserData.userPassword);
-      await registerPage.registerButton.click();
+    // Act:
+    await registerPage.firstNameInput.fill(registerUserData.userFirstName);
+    await registerPage.lastNameInput.fill(registerUserData.userLastName);
+    await registerPage.passwordInput.fill(registerUserData.userPassword);
+    await registerPage.registerButton.click();
 
-      // Assert:
-      await expect(registerPage.emailErrorText).toHaveText(
-        expectedEmailErrorText,
-      );
-    },
-  );
+    // Assert:
+    await expect(registerPage.emailErrorText).toHaveText(expectedEmailErrorText);
+  });
 });

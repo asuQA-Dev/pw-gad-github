@@ -27,6 +27,7 @@ export default defineConfig([
   {
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'error',
+      'max-len': 'off',
     },
   },
   eslintPluginPlaywright.configs['flat/recommended'],
