@@ -30,8 +30,8 @@ test.describe('Create and verify articles', () => {
     const articlePage = await addArticleView.createArticle(articleData);
 
     // Assert:
-    await expect.soft(articlePage.createdArticleTitle).toHaveText(articleData.title);
-    await expect.soft(articlePage.createdArticleBody).toHaveText(articleData.body);
+    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+    await expect.soft(articlePage.articleBody).toHaveText(articleData.body);
   });
 
   test('user can access single article', { tag: '@GAD-R04-03, @logged' }, async () => {
@@ -41,8 +41,8 @@ test.describe('Create and verify articles', () => {
     await articlesPage.gotoArticle(articleData.title);
 
     // Assert:
-    await expect.soft(articlePage.createdArticleTitle).toHaveText(articleData.title);
-    await expect.soft(articlePage.createdArticleBody).toHaveText(articleData.body);
+    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
+    await expect.soft(articlePage.articleBody).toHaveText(articleData.body);
   });
   test('user can delete his own article', { tag: '@GAD-R04-04, @logged' }, async () => {
     // Arrange:
@@ -51,10 +51,10 @@ test.describe('Create and verify articles', () => {
     await articlesPage.gotoArticle(articleData.title);
 
     // Act:
-    articlePage = await articlesPage.deleteArticle();
+    articlesPage = await articlePage.deleteArticle();
 
     // Assert:
-    await articlePage.waitForPageLoadToUrl();
+    await articlesPage.waitForPageLoadToUrl();
     const title = await articlesPage.getTitle();
     expect(title).toContain(expectedToContainTitle);
 

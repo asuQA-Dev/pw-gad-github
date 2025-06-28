@@ -48,9 +48,9 @@ test.describe('Create and verify comment', () => {
 
     let commentPage: CommentPage = await test.step('2. Verify comment', async () => {
       // Act
-      const articleComment = articlesPage.getArticleComment(newCommentData.body);
+      const articleComment = articlePage.getArticleComment(newCommentData.body);
       await expect(articleComment.body).toHaveText(newCommentData.body);
-      const commentPage = await articlesPage.clickCommentLink(articleComment.link);
+      const commentPage = await articlePage.clickCommentLink(articleComment);
 
       // Assert:
       await expect(commentPage.commentBody).toHaveText(newCommentData.body);
@@ -74,8 +74,8 @@ test.describe('Create and verify comment', () => {
 
     await test.step('4. Verify updated comment in article page', async () => {
       // Act:
-      const articlesPage = await commentPage.clickReturnLink();
-      const updatedCommentData = articlesPage.getArticleComment(editCommentData.body);
+      await commentPage.clickReturnLink();
+      const updatedCommentData = articlePage.getArticleComment(editCommentData.body);
 
       // Assert:
       await expect(updatedCommentData.body).toHaveText(editCommentData.body);
@@ -102,9 +102,9 @@ test.describe('Create and verify comment', () => {
       });
 
       await test.step('2-step verify', async () => {
-        const articleComment = articlesPage.getArticleComment(secondCommentBody);
+        const articleComment = articlePage.getArticleComment(secondCommentBody);
         await expect(articleComment.body).toHaveText(secondCommentBody);
-        const commentPage = await articlesPage.clickCommentLink(articleComment.link);
+        const commentPage = await articlePage.clickCommentLink(articleComment);
 
         await expect(commentPage.commentBody).toHaveText(secondCommentBody);
       });
