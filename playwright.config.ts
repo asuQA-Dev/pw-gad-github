@@ -26,10 +26,15 @@ export default defineConfig({
   },
 
   projects: [
+    // {
+    //   name: 'chromium-non-logged',
+    //   grepInvert: /@logged/,
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
     {
       name: 'chromium-non-logged',
-      grepInvert: /@logged/,
-      use: { ...devices['Desktop Chrome'] },
+
+      use: { ...devices['Desktop Firefox'] },
     },
     {
       name: 'setup',
