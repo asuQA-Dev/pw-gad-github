@@ -1,4 +1,5 @@
 import { prepareRandomArticle } from '@_src/factories/article.factory';
+// import { expect, test } from '@_src/fixtures/merge.fixture';
 import { ArticlePage } from '@_src/pages/article.page';
 import { ArticlesPage } from '@_src/pages/articles.page';
 import { AddArticleView } from '@_src/views/add-article.view';
@@ -12,8 +13,9 @@ test.describe('Verify articles', () => {
     articlesPage = new ArticlesPage(page);
     addArticleView = new AddArticleView(page);
 
-    await articlesPage.goto();
-    await articlesPage.addArticleButtonLogged.click();
+    // await articlesPage.goto();
+    // await articlesPage.addArticleButtonLogged.click();
+    addArticleView = await articlesPage.clickAddArticleButton();
 
     await expect.soft(addArticleView.addNewHeader).toBeVisible();
   });
@@ -53,8 +55,7 @@ test.describe('Verify articles', () => {
     const articleData = prepareRandomArticle();
 
     // Act:
-    // Create article with empty title
-    await addArticleView.addBodyInput.fill(articleData.body);
+    await addArticleView.addBodyInput.fill(articleData.body); // Create article with empty title
     await addArticleView.saveButton.click();
 
     // Assert:
@@ -65,13 +66,10 @@ test.describe('Verify articles', () => {
     // Arrange:
     const expectedAlertMessagePopup = 'Article was not created';
     const articleData = prepareRandomArticle();
-
     articleData.body = '';
 
     // Act:
-    // Create article with empty body
-    await addArticleView.createArticle(articleData);
-
+    await addArticleView.createArticle(articleData); // Create article with empty body
     // Assert:
     await expect(addArticleView.alertPopup).toHaveText(expectedAlertMessagePopup);
   });
@@ -79,13 +77,11 @@ test.describe('Verify articles', () => {
   test.describe('Verify articles title length', () => {
     test('reject new article with title exceeding 129 signs', { tag: '@GAD-R04-02, @logged' }, async () => {
       // Arrange:
+      const expectedAlertMessagePopup = 'Article was not created';
       const articleData = prepareRandomArticle(129);
 
-      const expectedAlertMessagePopup = 'Article was not created';
-
       // Act:
-      // Create article with 128 sign
-      await addArticleView.createArticle(articleData);
+      await addArticleView.createArticle(articleData); // Create article with 128 sign
 
       // Assert:
       await expect(addArticleView.alertPopup).toHaveText(expectedAlertMessagePopup);
@@ -96,8 +92,7 @@ test.describe('Verify articles', () => {
       const createdArticlePage = new ArticlePage(page);
 
       // Act:
-      // Create article with 128 sign
-      await addArticleView.createArticle(articleData);
+      await addArticleView.createArticle(articleData); // Create article with 128 sign
 
       // Assert:
       await expect(createdArticlePage.articleTitle).toHaveText(articleData.title);

@@ -20,10 +20,10 @@ test.describe('Verify register', () => {
 
       // const loginPage = new LoginPage(page);
 
-      const loginData = {
-        userEmail: registerUserData.userEmail,
-        userPassword: registerUserData.userPassword,
-      };
+      // const loginData = {
+      //   userEmail: registerUserData.userEmail,
+      //   userPassword: registerUserData.userPassword,
+      // };
 
       // Act:
       const loginPage = await registerPage.registerUser(registerUserData);
@@ -35,7 +35,13 @@ test.describe('Verify register', () => {
       const titleLogin = await loginPage.getTitle();
       expect.soft(titleLogin).toContain(expectedTitleLogin);
 
-      const welcomePage = await loginPage.login(loginData);
+      // Assert test login
+      // const welcomePage = await loginPage.login(loginData);
+      const welcomePage = await loginPage.login({
+        userEmail: registerUserData.userEmail,
+        userPassword: registerUserData.userPassword,
+      });
+
       const titleWelcome = await welcomePage.getTitle();
       expect(titleWelcome).toContain(expectedTitleWelcome);
     },
@@ -52,6 +58,7 @@ test.describe('Verify register', () => {
     // Assert:
     await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
   });
+
   test('Not register with incorrect data - email not provided', { tag: '@GAD-R03-04' }, async ({ registerPage }) => {
     // Arrange:
     const expectedEmailErrorText = 'This field is required';
